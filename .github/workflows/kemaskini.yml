@@ -8,6 +8,11 @@ on:
     # awal dan larian akan pulang dengan tangan kosong.
     - cron: "25 * * * *"
   workflow_dispatch:
+    inputs:
+      isi_semula:
+        description: "Isi semula sejarah berapa hari ke belakang (0-7)"
+        required: false
+        default: "0"
   push:
     branches: [main]
     paths:
@@ -40,7 +45,7 @@ jobs:
           python-version: "3.12"
 
       - name: Ambil data APIMS dan MET
-        run: python3 scripts/kemaskini.py
+        run: python3 scripts/kemaskini.py --isi-semula "${{ github.event.inputs.isi_semula || '0' }}"
 
       - name: Commit jika ada perubahan
         run: |

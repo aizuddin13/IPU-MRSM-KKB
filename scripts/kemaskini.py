@@ -128,49 +128,57 @@ def simpan(nama, isi):
         f.write("\n")
 
 
-def ambil_apims(sekarang):
-    """Tingkap 25 jam bagi setiap negeri yang ada stesen dipantau."""
-    sehingga = (sekarang.replace(minute=0, second=0, microsecond=0)
-                + timedelta(hours=1)).strftime("%Y-%m-%dT%H:00:00")
+def ambil_apims(sekarang, hari_lalu=0):
+    """Bacaan sejam bagi setiap negeri yang ada stesen dipantau.
+
+    APIMS hanya memulangkan tingkap 25 jam setiap panggilan, berakhir pada
+    `datetime` yang diminta. Dengan hari_lalu > 0 panggilan diulang setiap
+    24 jam ke belakang, jadi sejarah lama boleh diisi semula sekali gus
+    (lihat --isi-semula).
+    """
+    jam_ini = sekarang.replace(minute=0, second=0, microsecond=0)
     bersih = []
-    for stateid in NEGERI_DIAMBIL:
-        url = (f"{APIMS}?stateid={stateid}&datetime={sehingga}"
-               f"&stn=all&_r={int(time.time())}")
-        print(f"APIMS negeri {stateid}: {url}")
-        jawapan = ambil_json(url)
-        if not jawapan:
-            print(f"  negeri {stateid} gagal dibaca.", file=sys.stderr)
-            continue
-        baris = (jawapan.get("api_table_hourly")
-                 if isinstance(jawapan, dict) else jawapan)
-        if not baris:
-            continue
-        for r in baris:
-            sid = r.get("STATION_ID")
-            if sid not in STESEN:
-                continue  # stesen lain dalam negeri yang sama — tidak berkaitan
-            try:
-                ipu = int(r["API"])
-            except (KeyError, TypeError, ValueError):
-                continue  # bacaan tiada atau rosak — langkau
-            masa = str(r.get("DATETIME", ""))[:19]
-            if len(masa) != 19:
+    for d in range(hari_lalu + 1):
+        sehingga = (jam_ini + timedelta(hours=1) - timedelta(days=d)
+                    ).strftime("%Y-%m-%dT%H:00:00")
+        for stateid in NEGERI_DIAMBIL:
+            url = (f"{APIMS}?stateid={stateid}&datetime={sehingga}"
+                   f"&stn=all&_r={int(time.time())}")
+            print(f"APIMS negeri {stateid} hingga {sehingga}")
+            jawapan = ambil_json(url)
+            if not jawapan:
+                print(f"  negeri {stateid} gagal dibaca.", file=sys.stderr)
                 continue
-            try:
-                lat = float(r.get("LATITUDE"))
-                lon = float(r.get("LONGITUDE"))
-            except (TypeError, ValueError):
-                lat = lon = None
-            bersih.append({
-                "id": sid,
-                "nama": STESEN[sid]["nama"],
-                "negeri": STESEN[sid]["negeri"],
-                "masa": masa,
-                "ipu": ipu,
-                "jarak": jarak_km(lat, lon) if lat is not None else None,
-                "pencemar": SIMBOL_PENCEMAR.get(
-                    str(r.get("PARAM_SYMBOL", "")).strip(), "PM2.5"),
-            })
+            baris = (jawapan.get("api_table_hourly")
+                     if isinstance(jawapan, dict) else jawapan)
+            if not baris:
+                continue
+            for r in baris:
+                sid = r.get("STATION_ID")
+                if sid not in STESEN:
+                    continue  # stesen lain dalam negeri sama — tidak berkaitan
+                try:
+                    ipu = int(r["API"])
+                except (KeyError, TypeError, ValueError):
+                    continue  # bacaan tiada atau rosak — langkau
+                masa = str(r.get("DATETIME", ""))[:19]
+                if len(masa) != 19:
+                    continue
+                try:
+                    lat = float(r.get("LATITUDE"))
+                    lon = float(r.get("LONGITUDE"))
+                except (TypeError, ValueError):
+                    lat = lon = None
+                bersih.append({
+                    "id": sid,
+                    "nama": STESEN[sid]["nama"],
+                    "negeri": STESEN[sid]["negeri"],
+                    "masa": masa,
+                    "ipu": ipu,
+                    "jarak": jarak_km(lat, lon) if lat is not None else None,
+                    "pencemar": SIMBOL_PENCEMAR.get(
+                        str(r.get("PARAM_SYMBOL", "")).strip(), "PM2.5"),
+                })
     return bersih or None
 
 
@@ -288,11 +296,23 @@ def tulis_cuaca(sekarang):
     print(f"cuaca.json: {len(ramalan)} hari")
 
 
-def main():
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    hari_lalu = 0
+    if "--isi-semula" in argv:
+        i = argv.index("--isi-semula")
+        try:
+            hari_lalu = max(0, min(7, int(argv[i + 1])))
+        except (IndexError, ValueError):
+            print("Guna: --isi-semula N  (N hari, maksimum 7)", file=sys.stderr)
+            return 2
+
     sekarang = datetime.now(MYT)
     print(f"Masa Malaysia: {sekarang:%Y-%m-%d %H:%M:%S}")
+    if hari_lalu:
+        print(f"Mod isi semula: {hari_lalu} hari ke belakang.")
 
-    baris = ambil_apims(sekarang)
+    baris = ambil_apims(sekarang, hari_lalu)
     if baris is None:
         print("APIMS tidak dapat dibaca. Tiada fail ditulis.", file=sys.stderr)
         return 1
