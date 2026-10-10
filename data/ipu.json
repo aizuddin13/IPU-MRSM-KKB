@@ -5,15 +5,9 @@
  "negeri": "Perak",
  "jarak_km": 21,
  "nota": "Tiada stesen APIMS di Kuala Kubu Bharu. Bacaan ini dari stesen rujukan terdekat.",
- "dikemaskini": "2026-10-10T19:00:00+08:00",
+ "dikemaskini": "2026-10-10T20:00:00+08:00",
  "sumber": "APIMS, Jabatan Alam Sekitar",
  "bacaan": [
-  {
-   "masa": "2026-10-03T20:00:00",
-   "ipu": 62,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
   {
    "masa": "2026-10-03T21:00:00",
    "ipu": 62,
@@ -1013,6 +1007,12 @@
   {
    "masa": "2026-10-10T19:00:00",
    "ipu": 159,
+   "kategori": "Tidak Sihat",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-10-10T20:00:00",
+   "ipu": 158,
    "kategori": "Tidak Sihat",
    "pencemar": "PM2.5"
   }
