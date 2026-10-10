@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kualiti Udara MRSM Kuala Kubu Bharu — IPU semasa</title>
+<meta name="description" content="Pemantauan Indeks Pencemar Udara (IPU) untuk MRSM Kuala Kubu Bharu, dirujuk dari stesen APIMS Tanjung Malim dan empat stesen berdekatan, dikemas kini setiap jam.">
+<meta name="color-scheme" content="light dark">
+<style>
+:root{
+  --bg:#fbfbfa; --panel:#ffffff; --line:#e6e4df; --fg:#1f1e1c; --muted:#6b6862;
+  --accent:#3d6b9e; --muted-bar:#c9c6c0; --grid:#efedea; --ref:#d4d1cb;
+  --ok:#3f7d4e; --warn:#a9700f; --bad:#b1442c;
+  --radius:10px; --gutter:20px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#191917; --panel:#211f1d; --line:#35322e; --fg:#eceae5; --muted:#a09c95;
+    --accent:#7aa7d4; --muted-bar:#4a4641; --grid:#2b2825; --ref:#453f3a;
+    --ok:#74b182; --warn:#d6a34a; --bad:#e0775c;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:900px; margin:0 auto; padding:var(--gutter) var(--gutter) 56px}
+header{padding:28px 0 20px; border-bottom:1px solid var(--line); margin-bottom:24px}
+h1{font-size:1.5rem; font-weight:600; margin:0; letter-spacing:-.01em}
+.sub{color:var(--muted); font-size:.875rem; margin-top:6px}
+h2{font-size:1rem; font-weight:600; margin:0 0 4px}
+.note{color:var(--muted); font-size:.8125rem; margin:0 0 16px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-bottom:16px}
+
+.proksi{display:flex; gap:12px; align-items:flex-start; border:1px solid var(--line);
+  border-left:3px solid var(--accent); border-radius:var(--radius); background:var(--panel);
+  padding:14px 18px; margin-bottom:16px}
+.proksi-teks{font-size:.875rem; color:var(--muted)}
+.proksi-teks strong{color:var(--fg); font-weight:600}
+
+#tindakan{display:none; gap:12px; align-items:flex-start; border:1px solid var(--line);
+  border-left:3px solid var(--ok); border-radius:var(--radius); background:var(--panel);
+  padding:16px 20px; margin-bottom:16px}
+#tindakan.show{display:flex}
+#tindakan.warn{border-left-color:var(--warn)}
+#tindakan.bad{border-left-color:var(--bad)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--ok);flex:0 0 auto;margin-top:8px}
+#tindakan.warn .dot{background:var(--warn)}
+#tindakan.bad .dot{background:var(--bad)}
+.t-tajuk{font-weight:600;color:var(--ok)}
+#tindakan.warn .t-tajuk{color:var(--warn)}
+#tindakan.bad .t-tajuk{color:var(--bad)}
+.t-mesej{color:var(--muted); font-size:.875rem; margin-top:3px}
+
+.kini{display:flex; flex-wrap:wrap; align-items:baseline; gap:16px}
+.kini-num{font-size:4rem; line-height:1; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-.03em}
+.kini-status{font-size:1.125rem; font-weight:600}
+.kini-meta{color:var(--muted); font-size:.875rem; margin-top:12px}
+.julat{margin-top:14px; padding-top:14px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.875rem}
+.julat strong{color:var(--fg); font-variant-numeric:tabular-nums}
+.ok{color:var(--ok)} .warn{color:var(--warn)} .bad{color:var(--bad)}
+
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr)); gap:12px; margin-bottom:16px}
+.tile{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:16px}
+.tile-label{color:var(--muted); font-size:.75rem}
+.tile-num{font-size:1.75rem; font-weight:600; font-variant-numeric:tabular-nums; line-height:1.2; margin-top:2px}
+.tile-note{color:var(--muted); font-size:.75rem; margin-top:4px}
+
+.chart{position:relative; width:100%}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+
+.wx{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr)); gap:10px}
+.wx-day{border:1px solid var(--line); border-radius:var(--radius); padding:14px}
+.wx-hari{color:var(--muted); font-size:.75rem}
+.wx-tarikh{font-weight:600; font-size:.9375rem}
+.wx-ring{font-size:.8125rem; margin-top:6px}
+.wx-sesi{color:var(--muted); font-size:.75rem; margin-top:6px}
+.wx-suhu{font-size:1.125rem; font-weight:600; font-variant-numeric:tabular-nums; margin-top:10px}
+.wx-suhu .min{color:var(--muted); font-weight:400}
+
+.skala{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px 18px; font-size:.8125rem}
+.skala li{display:flex; align-items:center; gap:7px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+.panduan{margin:0; padding:0; list-style:none; font-size:.875rem}
+.panduan li{display:flex; gap:10px; padding:8px 0; border-top:1px solid var(--line)}
+.panduan li:first-child{border-top:0}
+.panduan .p-ipu{flex:0 0 76px; font-variant-numeric:tabular-nums; font-weight:600}
+
+footer{color:var(--muted); font-size:.8125rem; border-top:1px solid var(--line); padding-top:20px; margin-top:28px}
+footer a{color:inherit}
+.muat{color:var(--muted); font-size:.875rem; padding:24px 0; text-align:center}
+.ralat{color:var(--bad); font-size:.875rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Kualiti Udara MRSM Kuala Kubu Bharu</h1>
+  <div class="sub">Indeks Pencemar Udara (IPU) · <span id="stamp">—</span></div>
+</header>
+
+<div class="proksi">
+  <div class="proksi-teks" id="proksi-teks">
+    <strong>Tiada stesen APIMS di Kuala Kubu Bharu.</strong>
+    Angka utama di halaman ini datang dari stesen rujukan terdekat, dan empat stesen
+    berdekatan ditunjukkan sekali supaya keadaan seluruh kawasan kelihatan.
+  </div>
+</div>
+
+<div id="tindakan" role="status">
+  <span class="dot" aria-hidden="true"></span>
+  <div>
+    <div class="t-tajuk" id="t-tajuk"></div>
+    <div class="t-mesej" id="t-mesej"></div>
+  </div>
+</div>
+
+<div id="isi" hidden>
+
+  <section class="card">
+    <div class="kini">
+      <div class="kini-num" id="kini-num">—</div>
+      <div>
+        <div class="kini-status" id="kini-status">—</div>
+        <div class="tile-note" id="kini-delta">—</div>
+      </div>
+    </div>
+    <div class="kini-meta" id="kini-meta">—</div>
+    <div class="julat" id="julat">—</div>
+  </section>
+
+  <div class="tiles">
+    <div class="tile"><div class="tile-label">Purata 24 jam</div><div class="tile-num" id="t-purata">—</div><div class="tile-note">Stesen rujukan, 24 jam terakhir</div></div>
+    <div class="tile"><div class="tile-label">Tertinggi 7 hari</div><div class="tile-num" id="t-maks">—</div><div class="tile-note" id="t-maks-bila">—</div></div>
+    <div class="tile"><div class="tile-label">Terendah 7 hari</div><div class="tile-num" id="t-min">—</div><div class="tile-note" id="t-min-bila">—</div></div>
+    <div class="tile"><div class="tile-label">Jam tidak sihat</div><div class="tile-num" id="t-buruk">—</div><div class="tile-note" id="t-buruk-nota">—</div></div>
+  </div>
+
+  <section class="card">
+    <h2>Bacaan setiap jam</h2>
+    <p class="note" id="nota-jam">Tujuh hari terakhir di stesen rujukan. Garis putus menandakan ambang 50, 100 dan 150.</p>
+    <div class="chart" id="c-jam"></div>
+  </section>
+
+  <section class="card">
+    <h2>IPU purata harian</h2>
+    <p class="note">Bar ialah purata harian; garis menegak menunjukkan julat terendah hingga tertinggi hari itu.</p>
+    <div class="chart" id="c-harian"></div>
+  </section>
+
+  <section class="card">
+    <h2>Stesen sekitar Kuala Kubu Bharu</h2>
+    <p class="note">Bacaan semasa, disusun dari yang paling hampir. Stesen rujukan diwarnakan.</p>
+    <div class="chart" id="c-dekat"></div>
+  </section>
+
+  <section class="card">
+    <h2>Ramalan cuaca Kuala Kubu Bharu</h2>
+    <p class="note">Tujuh hari dari MET Malaysia. Ramalan dikeluarkan sekali sehari.</p>
+    <div class="wx" id="wx"></div>
+  </section>
+
+  <section class="card">
+    <h2>Panduan aktiviti sekolah</h2>
+    <p class="note">Ambang am yang digunakan pihak berkuasa semasa jerebu. Arahan rasmi MARA, KPM atau JPN sentiasa mengatasi halaman ini.</p>
+    <ul class="panduan">
+      <li><span class="p-ipu ok">0–100</span><span>Aktiviti luar seperti biasa. Pantau jika bacaan menghampiri 100.</span></li>
+      <li><span class="p-ipu warn">101–200</span><span>Hentikan semua aktiviti luar bilik darjah — perhimpunan, sukan, kokurikulum luar. Pelajar asma dan masalah pernafasan perlu diberi perhatian.</span></li>
+      <li><span class="p-ipu bad">201–300</span><span>Ambang penutupan sekolah, tadika dan taska. Tunggu dan ikut arahan rasmi.</span></li>
+      <li><span class="p-ipu bad">Melebihi 300</span><span>Berbahaya. Semua orang kekal dalam bangunan tertutup; dapatkan rawatan jika sesak nafas atau sakit dada.</span></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Skala IPU</h2>
+    <ul class="skala">
+      <li><span class="sw" style="background:var(--ok)"></span>0–50 Baik</li>
+      <li><span class="sw" style="background:var(--warn)"></span>51–100 Sederhana</li>
+      <li><span class="sw" style="background:var(--bad)"></span>101–200 Tidak Sihat</li>
+      <li><span class="sw" style="background:var(--bad);opacity:.7"></span>201–300 Sangat Tidak Sihat</li>
+      <li><span class="sw" style="background:var(--bad);opacity:.45"></span>Melebihi 300 Berbahaya</li>
+    </ul>
+    <p class="note" style="margin:14px 0 0">IPU dikira daripada purata bergerak 24 jam bagi pencemar yang paling dominan pada masa itu.</p>
+  </section>
+
+</div>
+
+<div class="muat" id="muat">Memuatkan data…</div>
+
+<footer>
+  <p>Sumber bacaan IPU: Sistem Pengurusan Indeks Pencemar Udara (APIMS), Jabatan Alam Sekitar — <a href="https://eqms.doe.gov.my/APIMS/main">eqms.doe.gov.my</a>. Ramalan cuaca: MET Malaysia melalui portal data terbuka kerajaan.</p>
+  <p>Kuala Kubu Bharu tiada stesen pemantauan sendiri, jadi angka di sini ialah anggaran dari stesen berhampiran dan bukan bacaan di tapak MRSM. Halaman ini bukan terbitan rasmi mana-mana agensi dan dikemas kini secara automatik setiap jam. Untuk keputusan kesihatan atau keselamatan pelajar, rujuk portal APIMS serta arahan MARA, KPM dan Kementerian Kesihatan.</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var BULAN = ['Jan','Feb','Mac','Apr','Mei','Jun','Jul','Ogo','Sep','Okt','Nov','Dis'];
+  var NS = 'http://www.w3.org/2000/svg';
+
+  function kategori(a){
+    if (a <= 50) return 'Baik';
+    if (a <= 100) return 'Sederhana';
+    if (a <= 200) return 'Tidak Sihat';
+    if (a <= 300) return 'Sangat Tidak Sihat';
+    return 'Berbahaya';
+  }
+  function kelas(s){ return s === 'Baik' ? 'ok' : (s === 'Sederhana' ? 'warn' : 'bad'); }
+  function hariBulan(iso){ return Number(iso.slice(8,10)) + ' ' + BULAN[Number(iso.slice(5,7)) - 1]; }
+  function bila(iso){ return hariBulan(iso) + ' ' + iso.slice(0,4) + ', ' + iso.slice(11,16); }
+  function skala(d0, d1, r0, r1){
+    var span = (d1 - d0) || 1;
+    return function (v) { return r0 + (v - d0) / span * (r1 - r0); };
+  }
+  function el(tag, attrs, text){
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function svgBaru(w, h, label){
+    var s = el('svg', {viewBox: '0 0 ' + w + ' ' + h, preserveAspectRatio: 'xMidYMid meet', role: 'img'});
+    s.setAttribute('aria-label', label);
+    return s;
+  }
+  function tandaY(g, nilai, y, x1, x2, warna, dash){
+    g.appendChild(el('line', {x1: x1, x2: x2, y1: y(nilai), y2: y(nilai),
+      stroke: warna, 'stroke-width': 1, 'stroke-dasharray': dash || 'none'}));
+  }
+  function teks(g, x, yy, s, opts){
+    var a = {x: x, y: yy, 'font-size': (opts && opts.size) || 11, fill: (opts && opts.fill) || 'var(--muted)'};
+    if (opts && opts.anchor) a['text-anchor'] = opts.anchor;
+    if (opts && opts.weight) a['font-weight'] = opts.weight;
+    g.appendChild(el('text', a, s));
+  }
+
+  // ---- carta garis: bacaan sejam di stesen rujukan ----
+  function cartaJam(wrap, bacaan, namaStesen){
+    wrap.textContent = '';
+    var W = Math.max(300, wrap.clientWidth || 860);
+    var H = Math.max(240, Math.min(360, Math.round(W * 0.42)));
+    var m = {t: 12, r: 14, b: 28, l: 36};
+    var iw = W - m.l - m.r, ih = H - m.t - m.b;
+
+    var maks = bacaan.reduce(function (a, d) { return Math.max(a, d.ipu); }, 0);
+    var atas = Math.max(120, Math.ceil(maks * 1.12 / 10) * 10);
+    var t0 = Date.parse(bacaan[0].masa + 'Z'), t1 = Date.parse(bacaan[bacaan.length - 1].masa + 'Z');
+    var x = skala(t0, t1, 0, iw), y = skala(0, atas, ih, 0);
+
+    var svg = svgBaru(W, H, 'Graf garis bacaan IPU setiap jam di stesen ' + namaStesen);
+    var g = el('g', {transform: 'translate(' + m.l + ',' + m.t + ')'});
+    svg.appendChild(g);
+
+    var langkah = Math.ceil(atas / 4 / 25) * 25;
+    for (var v = 0; v <= atas; v += langkah){
+      tandaY(g, v, y, 0, iw, 'var(--grid)');
+      teks(g, -8, y(v) + 4, String(v), {anchor: 'end'});
+    }
+    [50, 100, 150].forEach(function (amb){
+      if (amb <= atas) tandaY(g, amb, y, 0, iw, 'var(--ref)', '4 4');
+    });
+
+    var pts = bacaan.map(function (d) { return [x(Date.parse(d.masa + 'Z')), y(d.ipu)]; });
+    var jalur = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+    var kawasan = jalur + ' L' + pts[pts.length - 1][0].toFixed(1) + ' ' + ih + ' L' + pts[0][0].toFixed(1) + ' ' + ih + ' Z';
+    g.appendChild(el('path', {d: kawasan, fill: 'var(--accent)', opacity: 0.1}));
+    g.appendChild(el('path', {d: jalur, fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2,
+      'stroke-linecap': 'round', 'stroke-linejoin': 'round'}));
+
+    var hariDilihat = {}, bilLabel = Math.max(2, Math.floor(iw / 70));
+    var hariUnik = [];
+    bacaan.forEach(function (d) {
+      var hari = d.masa.slice(0, 10);
+      if (!hariDilihat[hari]) { hariDilihat[hari] = true; hariUnik.push(hari); }
+    });
+    var lompat = Math.ceil(hariUnik.length / bilLabel);
+    hariUnik.forEach(function (hari, i){
+      if (i % lompat) return;
+      var px = x(Date.parse(hari + 'T00:00:00Z'));
+      if (px < 0 || px > iw) return;
+      teks(g, px, ih + 18, hariBulan(hari), {anchor: 'middle'});
+    });
+    wrap.appendChild(svg);
+  }
+
+  // ---- carta bar: purata harian ----
+  function cartaHarian(wrap, harian){
+    wrap.textContent = '';
+    var W = Math.max(300, wrap.clientWidth || 860);
+    var H = Math.max(220, Math.min(320, Math.round(W * 0.36)));
+    var m = {t: 12, r: 14, b: 28, l: 36};
+    var iw = W - m.l - m.r, ih = H - m.t - m.b;
+
+    var maks = harian.reduce(function (a, d) { return Math.max(a, d.maks); }, 0);
+    var atas = Math.max(120, Math.ceil(maks * 1.12 / 10) * 10);
+    var y = skala(0, atas, ih, 0);
+    var langkahX = iw / harian.length;
+    var lebar = Math.min(34, langkahX * 0.6);
+
+    var svg = svgBaru(W, H, 'Graf bar purata IPU harian di stesen rujukan');
+    var g = el('g', {transform: 'translate(' + m.l + ',' + m.t + ')'});
+    svg.appendChild(g);
+
+    var langkah = Math.ceil(atas / 4 / 25) * 25;
+    for (var v = 0; v <= atas; v += langkah){
+      tandaY(g, v, y, 0, iw, 'var(--grid)');
+      teks(g, -8, y(v) + 4, String(v), {anchor: 'end'});
+    }
+    [50, 100, 150].forEach(function (amb){
+      if (amb <= atas) tandaY(g, amb, y, 0, iw, 'var(--ref)', '4 4');
+    });
+
+    harian.forEach(function (d, i){
+      var cx = langkahX * (i + 0.5);
+      g.appendChild(el('rect', {x: cx - lebar / 2, y: y(d.purata), width: lebar,
+        height: Math.max(1, ih - y(d.purata)), rx: 4,
+        fill: d.maks > 150 ? 'var(--bad)' : 'var(--accent)'}));
+      g.appendChild(el('line', {x1: cx, x2: cx, y1: y(d.min), y2: y(d.maks),
+        stroke: 'var(--muted)', 'stroke-width': 1.5, 'stroke-linecap': 'round', opacity: 0.6}));
+      if (harian.length <= 10 || i % 2 === 0) teks(g, cx, ih + 18, hariBulan(d.tarikh), {anchor: 'middle'});
+    });
+    wrap.appendChild(svg);
+  }
+
+  // ---- carta bar melintang: stesen berdekatan ----
+  function cartaDekat(wrap, stesen, idRujukan){
+    wrap.textContent = '';
+    var senarai = stesen.slice();   // sudah disusun mengikut jarak oleh skrip
+    var W = Math.max(300, wrap.clientWidth || 860);
+    var tinggiBaris = 40;
+    var H = senarai.length * tinggiBaris + 34;
+    var m = {t: 6, r: 44, b: 24, l: Math.min(140, Math.max(96, Math.round(W * 0.24)))};
+    var iw = W - m.l - m.r, ih = H - m.t - m.b;
+
+    var maks = senarai.reduce(function (a, d) { return Math.max(a, d.ipu); }, 0);
+    var atas = Math.max(200, Math.ceil(maks * 1.15 / 10) * 10);
+    var x = skala(0, atas, 0, iw);
+    var langkahY = ih / senarai.length;
+    var tebal = Math.min(26, langkahY * 0.52);
+
+    var svg = svgBaru(W, H, 'Graf bar bacaan IPU semasa bagi stesen sekitar Kuala Kubu Bharu');
+    var g = el('g', {transform: 'translate(' + m.l + ',' + m.t + ')'});
+    svg.appendChild(g);
+
+    [100, 150, 200].forEach(function (amb){
+      if (amb > atas) return;
+      g.appendChild(el('line', {x1: x(amb), x2: x(amb), y1: 0, y2: ih,
+        stroke: 'var(--ref)', 'stroke-width': 1, 'stroke-dasharray': '4 4'}));
+      teks(g, x(amb), ih + 16, String(amb), {anchor: 'middle'});
+    });
+
+    senarai.forEach(function (d, i){
+      var yy = langkahY * i + (langkahY - tebal) / 2;
+      var utama = d.id === idRujukan;
+      g.appendChild(el('rect', {x: 0, y: yy, width: Math.max(2, x(d.ipu)), height: tebal, rx: 4,
+        fill: utama ? 'var(--accent)' : 'var(--muted-bar)'}));
+      teks(g, -10, yy + tebal / 2, d.nama, {anchor: 'end',
+        fill: utama ? 'var(--fg)' : 'var(--muted)', weight: utama ? 600 : 400});
+      if (d.jarak != null){
+        teks(g, -10, yy + tebal / 2 + 13, d.jarak + ' km', {anchor: 'end', size: 10});
+      }
+      teks(g, x(d.ipu) + 8, yy + tebal / 2 + 4, String(d.ipu), {size: 12, fill: 'var(--fg)'});
+    });
+    wrap.appendChild(svg);
+  }
+
+  function lukisCuaca(wrap, ramalan){
+    wrap.textContent = '';
+    ramalan.forEach(function (r){
+      var kad = document.createElement('div');
+      kad.className = 'wx-day';
+      var h = document.createElement('div'); h.className = 'wx-hari'; h.textContent = r.hari;
+      var t = document.createElement('div'); t.className = 'wx-tarikh'; t.textContent = hariBulan(r.tarikh);
+      var s = document.createElement('div'); s.className = 'wx-ring'; s.textContent = r.ringkasan;
+      var ses = document.createElement('div'); ses.className = 'wx-sesi';
+      ses.textContent = 'Pagi: ' + r.pagi;
+      ses.appendChild(document.createElement('br'));
+      ses.appendChild(document.createTextNode('Petang: ' + r.petang));
+      ses.appendChild(document.createElement('br'));
+      ses.appendChild(document.createTextNode('Malam: ' + r.malam));
+      var su = document.createElement('div'); su.className = 'wx-suhu';
+      su.appendChild(document.createTextNode(r.suhu_maks + '° '));
+      var mn = document.createElement('span'); mn.className = 'min'; mn.textContent = '/ ' + r.suhu_min + '°C';
+      su.appendChild(mn);
+      [h, t, s, ses, su].forEach(function (n) { kad.appendChild(n); });
+      wrap.appendChild(kad);
+    });
+  }
+
+  function ringkas(bacaan){
+    var akhir = bacaan[bacaan.length - 1];
+    var sebelum = bacaan.length > 24 ? bacaan[bacaan.length - 25] : bacaan[0];
+    var sejam24 = bacaan.slice(-24);
+    var purata = Math.round(sejam24.reduce(function (s, r) { return s + r.ipu; }, 0) / sejam24.length);
+    var tinggi = bacaan.reduce(function (m, r) { return r.ipu > m.ipu ? r : m; }, bacaan[0]);
+    var rendah = bacaan.reduce(function (m, r) { return r.ipu < m.ipu ? r : m; }, bacaan[0]);
+    return {
+      kini: akhir, beza: akhir.ipu - sebelum.ipu, purata: purata,
+      tinggi: tinggi, rendah: rendah,
+      buruk: bacaan.filter(function (r) { return r.ipu > 100; }).length, jumlah: bacaan.length
+    };
+  }
+
+  function kiraHarian(bacaan){
+    var kump = {};
+    bacaan.forEach(function (r){
+      var hari = r.masa.slice(0, 10);
+      (kump[hari] = kump[hari] || []).push(r.ipu);
+    });
+    return Object.keys(kump).sort().map(function (hari){
+      var v = kump[hari];
+      return {
+        tarikh: hari,
+        min: Math.min.apply(null, v),
+        maks: Math.max.apply(null, v),
+        purata: Math.round(v.reduce(function (s, x) { return s + x; }, 0) / v.length)
+      };
+    });
+  }
+
+  // Panduan tindakan sekolah berdasarkan bacaan tertinggi di kawasan, bukan
+  // hanya stesen rujukan — supaya nasihat tidak terlepas pandang stesen lain.
+  function tindakan(ipuRujukan, ipuTertinggi){
+    var a = Math.max(ipuRujukan, ipuTertinggi || 0);
+    if (a > 300){
+      return {kelas: 'bad', tajuk: 'IPU ' + a + ' — berbahaya',
+        mesej: 'Semua orang kekal di dalam bangunan tertutup. Dapatkan rawatan segera jika ada sesak nafas atau sakit dada. Ikut arahan rasmi.'};
+    }
+    if (a > 200){
+      return {kelas: 'bad', tajuk: 'IPU ' + a + ' — melepasi ambang 200',
+        mesej: 'Ini ambang penutupan sekolah, tadika dan taska. Semua aktiviti luar dibatalkan dan pelajar kekal di dalam bangunan. Tunggu arahan rasmi MARA atau KPM.'};
+    }
+    if (a > 100){
+      return {kelas: 'warn', tajuk: 'IPU ' + a + ' — tidak sihat',
+        mesej: 'Hentikan semua aktiviti luar bilik darjah: perhimpunan, sukan, PJ dan kokurikulum luar. Beri perhatian kepada pelajar asma serta masalah jantung dan paru-paru.'};
+    }
+    if (a > 80){
+      return {kelas: 'warn', tajuk: 'IPU ' + a + ' — menghampiri ambang 100',
+        mesej: 'Aktiviti luar masih boleh diteruskan, tetapi pantau bacaan sebelum sesi petang dan kurangkan aktiviti berat.'};
+    }
+    return {kelas: 'ok', tajuk: 'IPU ' + a + ' — selamat untuk aktiviti luar',
+      mesej: 'Tiada sekatan aktiviti berdasarkan kualiti udara buat masa ini.'};
+  }
+
+  function papar(ipu, dekat, cuaca){
+    var bacaan = ipu.bacaan.slice().sort(function (a, b) { return a.masa < b.masa ? -1 : 1; });
+    var r = ringkas(bacaan);
+    var kat = kategori(r.kini.ipu);
+    var namaStesen = ipu.stesen || 'rujukan';
+
+    document.getElementById('stamp').textContent =
+      'bacaan ' + bila(r.kini.masa) + ' · stesen ' + namaStesen;
+    document.getElementById('proksi-teks').innerHTML =
+      '<strong>Tiada stesen APIMS di Kuala Kubu Bharu.</strong> Angka utama di halaman ini ' +
+      'dari stesen ' + namaStesen + (ipu.jarak_km ? ' (' + ipu.jarak_km + ' km' : '') +
+      (ipu.jarak_km ? ' dari KKB)' : '') + ', dan stesen berdekatan lain ditunjukkan di bawah ' +
+      'supaya keadaan seluruh kawasan kelihatan.';
+
+    var num = document.getElementById('kini-num');
+    num.textContent = r.kini.ipu;
+    num.className = 'kini-num ' + kelas(kat);
+    var st = document.getElementById('kini-status');
+    st.textContent = kat;
+    st.className = 'kini-status ' + kelas(kat);
+    document.getElementById('kini-delta').textContent =
+      r.beza === 0 ? 'Tidak berubah berbanding 24 jam lalu'
+        : (r.beza > 0 ? 'Naik ' : 'Turun ') + Math.abs(r.beza) + ' mata berbanding 24 jam lalu';
+    document.getElementById('kini-meta').textContent =
+      'Pencemar utama ' + (r.kini.pencemar || 'PM2.5') + ' · stesen ' + (ipu.id_stesen || '') +
+      ', ' + namaStesen + (ipu.negeri ? ', ' + ipu.negeri : '');
+
+    var tertinggi = null;
+    var kotakJulat = document.getElementById('julat');
+    if (dekat && dekat.julat && dekat.stesen && dekat.stesen.length){
+      tertinggi = dekat.julat.maks;
+      var beza = dekat.julat.maks - dekat.julat.min;
+      var teksJulat = 'Kawasan sekitar: <strong>' + dekat.julat.min + '–' + dekat.julat.maks +
+        '</strong> merentas ' + dekat.stesen.length + ' stesen, purata <strong>' +
+        dekat.julat.purata + '</strong>.';
+      if (beza >= 40){
+        teksJulat += ' Bacaan antara stesen berbeza agak besar, jadi angka tunggal di atas ' +
+          'kurang boleh dipegang — rujuk carta stesen di bawah.';
+      }
+      kotakJulat.innerHTML = teksJulat;
+    } else {
+      kotakJulat.hidden = true;
+    }
+
+    var tind = tindakan(r.kini.ipu, tertinggi);
+    var kotak = document.getElementById('tindakan');
+    kotak.className = 'show ' + tind.kelas;
+    document.getElementById('t-tajuk').textContent = tind.tajuk;
+    document.getElementById('t-mesej').textContent = tind.mesej;
+
+    document.getElementById('t-purata').textContent = r.purata;
+    document.getElementById('t-maks').textContent = r.tinggi.ipu;
+    document.getElementById('t-maks-bila').textContent = bila(r.tinggi.masa);
+    document.getElementById('t-min').textContent = r.rendah.ipu;
+    document.getElementById('t-min-bila').textContent = bila(r.rendah.masa);
+    document.getElementById('t-buruk').textContent = r.buruk;
+    document.getElementById('t-buruk-nota').textContent = 'daripada ' + r.jumlah + ' jam direkod';
+
+    document.getElementById('nota-jam').textContent =
+      'Stesen ' + namaStesen + ', tujuh hari terakhir. Garis putus menandakan ambang 50, 100 dan 150.';
+
+    document.getElementById('muat').hidden = true;
+    document.getElementById('isi').hidden = false;
+
+    var harian = kiraHarian(bacaan);
+    function lukisSemua(){
+      cartaJam(document.getElementById('c-jam'), bacaan, namaStesen);
+      cartaHarian(document.getElementById('c-harian'), harian);
+      if (dekat && dekat.stesen) cartaDekat(document.getElementById('c-dekat'), dekat.stesen, ipu.id_stesen);
+    }
+    lukisSemua();
+    if (cuaca && cuaca.ramalan) lukisCuaca(document.getElementById('wx'), cuaca.ramalan);
+
+    var tunda;
+    window.addEventListener('resize', function (){
+      clearTimeout(tunda);
+      tunda = setTimeout(lukisSemua, 180);
+    });
+  }
+
+  function ambil(nama){
+    return fetch('data/' + nama + '.json?v=' + Date.now()).then(function (res){
+      if (!res.ok) throw new Error(nama);
+      return res.json();
+    });
+  }
+
+  Promise.all([
+    ambil('ipu'),
+    ambil('berdekatan').catch(function(){return null;}),
+    ambil('cuaca').catch(function(){return null;})
+  ]).then(function (hasil){ papar(hasil[0], hasil[1], hasil[2]); })
+    .catch(function (){
+      var m = document.getElementById('muat');
+      m.className = 'muat ralat';
+      m.textContent = 'Maaf, data tidak dapat dimuatkan buat masa ini. Sila cuba muat semula halaman ini.';
+    });
+})();
+</script>
+</body>
+</html>

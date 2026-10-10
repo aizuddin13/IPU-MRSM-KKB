@@ -1,0 +1,67 @@
+name: Kemas kini data IPU MRSM KKB
+
+on:
+  schedule:
+    # Setiap jam pada minit ke-25. Waktu Malaysia ialah UTC+8 penuh, jadi
+    # ini juga minit ke-25 waktu tempatan. APIMS menerbitkan bacaan sesuatu
+    # jam kira-kira 10 hingga 20 minit selepas jam itu, jadi :10 terlalu
+    # awal dan larian akan pulang dengan tangan kosong.
+    - cron: "25 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "scripts/**"
+      - ".github/workflows/**"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: kemaskini-ipu-kkb
+  cancel-in-progress: false
+
+jobs:
+  kemaskini:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Ambil repositori
+        uses: actions/checkout@v4
+
+      - name: Sediakan Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Ambil data APIMS dan MET
+        run: python3 scripts/kemaskini.py
+
+      - name: Commit jika ada perubahan
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "Tiada perubahan data untuk di-commit."
+          else
+            git commit -m "Kemas kini data IPU MRSM KKB — $(TZ=Asia/Kuala_Lumpur date '+%Y-%m-%d %H:%M')"
+            git push
+          fi
+
+      - name: Sediakan artifact Pages
+        uses: actions/configure-pages@v5
+
+      - name: Kemas artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Terbitkan ke GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
