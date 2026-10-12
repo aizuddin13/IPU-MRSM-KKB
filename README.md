@@ -44,14 +44,24 @@ Angka di halaman ini ialah **anggaran**, bukan bacaan di tapak MRSM.
 ## Kemas kini
 
 Workflow GitHub Actions (`kemaskini.yml`) menulis semula data setiap jam pada
-minit ke-25 dan menerbitkan halaman ke GitHub Pages. Dua perlindungan:
+minit ke-25 dan menerbitkan halaman ke GitHub Pages. Tiga perlindungan:
 
 - Jika bacaan terbaharu melebihi tiga jam, larian gagal dan tidak menulis data
   basi secara senyap.
 - Setiap larian mengambil tetingkap 25 jam supaya jam yang tertinggal diisi
   semula oleh larian kemudian.
+- Lompang yang lebih lama daripada tetingkap itu ditampal sendiri: APIMS
+  menghidangkan tetingkap lampau juga, jadi skrip berjalan ke belakang —
+  setiap tetingkap berakhir 24 jam selepas lompang terawal — sehingga tujuh
+  hari penuh terisi, paling banyak lapan tetingkap setiap larian. Hanya negeri
+  stesen rujukan diminta, bukan kesemuanya. Hujung tetingkap yang pernah
+  diminta dicatat dalam `tetingkap_dicuba` supaya jam yang memang tiada pada
+  APIMS tidak diminta semula selama-lamanya.
 
-Larian juga boleh dicetus secara manual dari tab Actions.
+Larian juga boleh dicetus secara manual dari tab Actions. Bendera
+`--isi-semula N` masih ada untuk mengisi N hari sekali gus bagi kesemua stesen,
+tetapi untuk lompang biasa penampal automatik itu sudah memadai dan jauh lebih
+jimat panggilan.
 
 ## Panduan aktiviti sekolah
 

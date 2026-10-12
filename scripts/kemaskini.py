@@ -35,6 +35,7 @@ KKB_LAT, KKB_LON = 3.5586, 101.6606
 STESEN_RUJUKAN = "CA14A"     # Tanjung Malim, Perak
 JAM_DISIMPAN = 168           # tetingkap bergolek tujuh hari
 AMBANG_BASI_JAM = 3          # bacaan lebih lama daripada ini dikira basi
+MAKS_TAMPAL = 8              # tetingkap lampau paling banyak setiap larian
 
 # Stesen yang dipantau: rujukan utama dahulu, kemudian stesen berdekatan
 # mengikut arah yang berbeza supaya corak jerebu kawasan kelihatan.
@@ -128,58 +129,139 @@ def simpan(nama, isi):
         f.write("\n")
 
 
+def jam_penuh(d):
+    return d.replace(minute=0, second=0, microsecond=0)
+
+
+def ambil_tetingkap(stateid, sehingga):
+    """Satu tetingkap 25 jam bagi satu negeri, berakhir pada `sehingga`.
+
+    `_r` menghalang jawapan lama daripada cache dihidangkan semula.
+    """
+    url = (f"{APIMS}?stateid={stateid}&datetime={sehingga}"
+           f"&stn=all&_r={int(time.time())}")
+    print(f"APIMS negeri {stateid} hingga {sehingga}")
+    jawapan = ambil_json(url)
+    if not jawapan:
+        print(f"  negeri {stateid} gagal dibaca.", file=sys.stderr)
+        return []
+    baris = (jawapan.get("api_table_hourly")
+             if isinstance(jawapan, dict) else jawapan)
+    if not baris:
+        return []
+    bersih = []
+    for r in baris:
+        sid = r.get("STATION_ID")
+        if sid not in STESEN:
+            continue  # stesen lain dalam negeri sama — tidak berkaitan
+        try:
+            ipu = int(r["API"])
+        except (KeyError, TypeError, ValueError):
+            continue  # bacaan tiada atau rosak — langkau
+        masa = str(r.get("DATETIME", ""))[:19]
+        if len(masa) != 19:
+            continue
+        try:
+            lat = float(r.get("LATITUDE"))
+            lon = float(r.get("LONGITUDE"))
+        except (TypeError, ValueError):
+            lat = lon = None
+        bersih.append({
+            "id": sid,
+            "nama": STESEN[sid]["nama"],
+            "negeri": STESEN[sid]["negeri"],
+            "masa": masa,
+            "ipu": ipu,
+            "jarak": jarak_km(lat, lon) if lat is not None else None,
+            "pencemar": SIMBOL_PENCEMAR.get(
+                str(r.get("PARAM_SYMBOL", "")).strip(), "PM2.5"),
+        })
+    return bersih
+
+
 def ambil_apims(sekarang, hari_lalu=0):
     """Bacaan sejam bagi setiap negeri yang ada stesen dipantau.
 
     APIMS hanya memulangkan tingkap 25 jam setiap panggilan, berakhir pada
     `datetime` yang diminta. Dengan hari_lalu > 0 panggilan diulang setiap
     24 jam ke belakang, jadi sejarah lama boleh diisi semula sekali gus
-    (lihat --isi-semula).
+    (lihat --isi-semula). Untuk lompang biasa, tampal_lompang menguruskan
+    perkara itu sendiri dan jauh lebih jimat: ia meminta negeri stesen
+    rujukan sahaja, bukan kesemua negeri.
     """
-    jam_ini = sekarang.replace(minute=0, second=0, microsecond=0)
+    jam_ini = jam_penuh(sekarang)
     bersih = []
     for d in range(hari_lalu + 1):
         sehingga = (jam_ini + timedelta(hours=1) - timedelta(days=d)
                     ).strftime("%Y-%m-%dT%H:00:00")
         for stateid in NEGERI_DIAMBIL:
-            url = (f"{APIMS}?stateid={stateid}&datetime={sehingga}"
-                   f"&stn=all&_r={int(time.time())}")
-            print(f"APIMS negeri {stateid} hingga {sehingga}")
-            jawapan = ambil_json(url)
-            if not jawapan:
-                print(f"  negeri {stateid} gagal dibaca.", file=sys.stderr)
-                continue
-            baris = (jawapan.get("api_table_hourly")
-                     if isinstance(jawapan, dict) else jawapan)
-            if not baris:
-                continue
-            for r in baris:
-                sid = r.get("STATION_ID")
-                if sid not in STESEN:
-                    continue  # stesen lain dalam negeri sama — tidak berkaitan
-                try:
-                    ipu = int(r["API"])
-                except (KeyError, TypeError, ValueError):
-                    continue  # bacaan tiada atau rosak — langkau
-                masa = str(r.get("DATETIME", ""))[:19]
-                if len(masa) != 19:
-                    continue
-                try:
-                    lat = float(r.get("LATITUDE"))
-                    lon = float(r.get("LONGITUDE"))
-                except (TypeError, ValueError):
-                    lat = lon = None
-                bersih.append({
-                    "id": sid,
-                    "nama": STESEN[sid]["nama"],
-                    "negeri": STESEN[sid]["negeri"],
-                    "masa": masa,
-                    "ipu": ipu,
-                    "jarak": jarak_km(lat, lon) if lat is not None else None,
-                    "pencemar": SIMBOL_PENCEMAR.get(
-                        str(r.get("PARAM_SYMBOL", "")).strip(), "PM2.5"),
-                })
+            bersih.extend(ambil_tetingkap(stateid, sehingga))
     return bersih or None
+
+
+def tampal_lompang(simpanan, dicuba, sekarang):
+    """Tarik tetingkap lampau sehingga tempoh simpanan penuh.
+
+    Satu panggilan APIMS memberi 25 jam sahaja, jadi larian yang terlepas
+    lebih lama daripada itu meninggalkan lompang kekal dalam graf. Setiap
+    tetingkap di sini berakhir 24 jam selepas jam terawal yang hilang,
+    jadi ia merangkumi lompang itu dan bertindih sedikit dengan yang
+    sudah ada. Hanya negeri stesen rujukan diminta.
+
+    `dicuba` menyimpan hujung tetingkap yang pernah diminta. Tanpanya,
+    jam yang memang tiada pada APIMS — stesen tutup, bacaan digugurkan —
+    akan diminta semula setiap jam, selama-lamanya.
+    """
+    stateid = STESEN[STESEN_RUJUKAN]["stateid"]
+    hujung = jam_penuh(sekarang)
+    mula = hujung - timedelta(hours=JAM_DISIMPAN - 1)
+
+    def hilang():
+        t, keluar = mula, []
+        while t <= hujung:
+            if t.strftime("%Y-%m-%dT%H:00:00") not in simpanan:
+                keluar.append(t)
+            t += timedelta(hours=1)
+        return keluar
+
+    ditambah = 0
+    for _ in range(MAKS_TAMPAL):
+        tiada = hilang()
+        if not tiada:
+            break
+        sasaran = min(tiada[0] + timedelta(hours=24), hujung)
+        kunci = sasaran.strftime("%Y-%m-%dT%H:00:00")
+        if kunci in dicuba:
+            # Sudah diminta sebelum ini dan jam itu tetap tiada: anggap
+            # ia memang tiada pada APIMS, dan cari lompang seterusnya.
+            seterusnya = None
+            for t in tiada:
+                k = min(t + timedelta(hours=24), hujung).strftime("%Y-%m-%dT%H:00:00")
+                if k not in dicuba:
+                    seterusnya = k
+                    break
+            if seterusnya is None:
+                break
+            kunci = seterusnya
+        dicuba.add(kunci)
+        baris = ambil_tetingkap(stateid, kunci)
+        if not baris:
+            print(f"  tetingkap {kunci}: tiada jawapan", file=sys.stderr)
+            continue
+        baru = 0
+        for b in baris:
+            if b["id"] != STESEN_RUJUKAN or b["masa"] in simpanan:
+                continue
+            simpanan[b["masa"]] = {
+                "masa": b["masa"], "ipu": b["ipu"],
+                "kategori": kategori(b["ipu"]), "pencemar": b["pencemar"],
+            }
+            baru += 1
+        ditambah += baru
+        print(f"  tetingkap {kunci}: +{baru} jam")
+        if baru:
+            time.sleep(1)  # jangan pukul APIMS bertalu-talu
+    return ditambah
 
 
 def tulis_ipu(baris, sekarang):
@@ -209,7 +291,14 @@ def tulis_ipu(baris, sekarang):
             }
             baharu += 1
 
+    dicuba = set(sedia.get("tetingkap_dicuba", []))
+    ditampal = tampal_lompang(simpanan, dicuba, sekarang)
+
     bacaan = [simpanan[m] for m in sorted(simpanan)][-JAM_DISIMPAN:]
+    # Buang catatan tetingkap yang sudah jatuh di luar tempoh simpanan.
+    if bacaan:
+        had = bacaan[0]["masa"]
+        dicuba = {k for k in dicuba if k >= had}
     simpan("ipu.json", {
         "lokasi": "MRSM Kuala Kubu Bharu",
         "stesen": STESEN[STESEN_RUJUKAN]["nama"],
@@ -220,10 +309,11 @@ def tulis_ipu(baris, sekarang):
                  "stesen rujukan terdekat."),
         "dikemaskini": terbaharu["masa"] + "+08:00",
         "sumber": "APIMS, Jabatan Alam Sekitar",
+        "tetingkap_dicuba": sorted(dicuba),
         "bacaan": bacaan,
     })
-    print(f"ipu.json: {baharu} bacaan baharu, {len(bacaan)} jam disimpan, "
-          f"terkini {terbaharu['masa']} = {terbaharu['ipu']}")
+    print(f"ipu.json: {baharu} bacaan baharu, {ditampal} jam ditampal, "
+          f"{len(bacaan)} jam disimpan, terkini {terbaharu['masa']} = {terbaharu['ipu']}")
     return terbaharu
 
 
