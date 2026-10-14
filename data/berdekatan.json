@@ -4,7 +4,7 @@
  "rujukan": "CA14A",
  "julat": {
   "min": 145,
-  "maks": 176,
+  "maks": 178,
   "purata": 161
  },
  "stesen": [
@@ -43,10 +43,10 @@
    "id": "CA16W",
    "negeri": "WP Kuala Lumpur",
    "jarak": 51,
-   "ipu": 176,
+   "ipu": 178,
    "kategori": "Tidak Sihat",
    "pencemar": "PM2.5",
-   "masa": "2026-10-14T20:00:00"
+   "masa": "2026-10-14T21:00:00"
   },
   {
    "nama": "Kuala Selangor",
