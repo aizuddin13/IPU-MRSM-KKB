@@ -1,6 +1,6 @@
 {
  "lokasi": "Kuala Kubu Bharu",
- "dikemaskini": "2026-10-19T09:52:00+08:00",
+ "dikemaskini": "2026-10-19T10:53:20+08:00",
  "sumber": "MET Malaysia melalui data.gov.my",
  "ramalan": [
   {
@@ -10,7 +10,7 @@
    "ringkasan_bila": "Sepanjang hari",
    "pagi": "Ribut petir",
    "petang": "Ribut petir",
-   "malam": "Jerebu",
+   "malam": "Hujan",
    "suhu_min": 24,
    "suhu_maks": 32
   },
@@ -18,8 +18,8 @@
    "tarikh": "2026-10-20",
    "hari": "Selasa",
    "ringkasan": "Ribut petir",
-   "ringkasan_bila": "Sepanjang hari",
-   "pagi": "Jerebu",
+   "ringkasan_bila": "Petang dan malam",
+   "pagi": "Tiada hujan",
    "petang": "Ribut petir",
    "malam": "Jerebu",
    "suhu_min": 24,
@@ -41,7 +41,7 @@
    "hari": "Khamis",
    "ringkasan": "Ribut petir",
    "ringkasan_bila": "Sepanjang hari",
-   "pagi": "Mendung",
+   "pagi": "Jerebu",
    "petang": "Ribut petir",
    "malam": "Hujan",
    "suhu_min": 24,
@@ -54,7 +54,7 @@
    "ringkasan_bila": "Sepanjang hari",
    "pagi": "Jerebu",
    "petang": "Ribut petir",
-   "malam": "Jerebu",
+   "malam": "Hujan",
    "suhu_min": 24,
    "suhu_maks": 32
   },
@@ -62,10 +62,10 @@
    "tarikh": "2026-10-24",
    "hari": "Sabtu",
    "ringkasan": "Ribut petir",
-   "ringkasan_bila": "Sepanjang hari",
-   "pagi": "Jerebu",
+   "ringkasan_bila": "Petang dan malam",
+   "pagi": "Tiada hujan",
    "petang": "Ribut petir",
-   "malam": "Ribut petir",
+   "malam": "Hujan",
    "suhu_min": 24,
    "suhu_maks": 32
   },
@@ -73,10 +73,10 @@
    "tarikh": "2026-10-25",
    "hari": "Ahad",
    "ringkasan": "Ribut petir",
-   "ringkasan_bila": "Sepanjang hari",
-   "pagi": "Jerebu",
+   "ringkasan_bila": "Petang dan malam",
+   "pagi": "Tiada hujan",
    "petang": "Ribut petir",
-   "malam": "Ribut petir",
+   "malam": "Hujan",
    "suhu_min": 24,
    "suhu_maks": 32
   }
