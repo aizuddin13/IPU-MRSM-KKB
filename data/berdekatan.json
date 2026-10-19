@@ -1,5 +1,5 @@
 {
- "dikemaskini": "2026-10-19T16:00:00+08:00",
+ "dikemaskini": "2026-10-19T17:00:00+08:00",
  "sumber": "APIMS, Jabatan Alam Sekitar",
  "rujukan": "CA14A",
  "julat": {
@@ -16,7 +16,7 @@
    "ipu": 87,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-19T16:00:00"
+   "masa": "2026-10-19T17:00:00"
   },
   {
    "nama": "Batu Muda",
@@ -46,7 +46,7 @@
    "ipu": 152,
    "kategori": "Tidak Sihat",
    "pencemar": "PM2.5",
-   "masa": "2026-10-19T15:00:00"
+   "masa": "2026-10-19T16:00:00"
   },
   {
    "nama": "Kuala Selangor",
