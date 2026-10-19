@@ -4,8 +4,8 @@
  "rujukan": "CA14A",
  "julat": {
   "min": 87,
-  "maks": 164,
-  "purata": 131
+  "maks": 165,
+  "purata": 132
  },
  "stesen": [
   {
@@ -23,40 +23,40 @@
    "id": "CA15W",
    "negeri": "WP Kuala Lumpur",
    "jarak": 39,
-   "ipu": 164,
+   "ipu": 165,
    "kategori": "Tidak Sihat",
    "pencemar": "PM2.5",
-   "masa": "2026-10-19T16:00:00"
+   "masa": "2026-10-19T17:00:00"
   },
   {
    "nama": "Petaling Jaya",
    "id": "CA19B",
    "negeri": "Selangor",
    "jarak": 48,
-   "ipu": 158,
+   "ipu": 159,
    "kategori": "Tidak Sihat",
    "pencemar": "PM2.5",
-   "masa": "2026-10-19T16:00:00"
+   "masa": "2026-10-19T17:00:00"
   },
   {
    "nama": "Cheras",
    "id": "CA16W",
    "negeri": "WP Kuala Lumpur",
    "jarak": 51,
-   "ipu": 152,
+   "ipu": 154,
    "kategori": "Tidak Sihat",
    "pencemar": "PM2.5",
-   "masa": "2026-10-19T16:00:00"
+   "masa": "2026-10-19T17:00:00"
   },
   {
    "nama": "Kuala Selangor",
    "id": "CA18B",
    "negeri": "Selangor",
    "jarak": 52,
-   "ipu": 93,
+   "ipu": 94,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-19T16:00:00"
+   "masa": "2026-10-19T17:00:00"
   }
  ]
 }
