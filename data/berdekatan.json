@@ -3,9 +3,9 @@
  "sumber": "APIMS, Jabatan Alam Sekitar",
  "rujukan": "CA14A",
  "julat": {
-  "min": 66,
+  "min": 65,
   "maks": 157,
-  "purata": 99
+  "purata": 98
  },
  "stesen": [
   {
@@ -36,27 +36,27 @@
    "ipu": 89,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-24T20:00:00"
+   "masa": "2026-10-24T21:00:00"
   },
   {
    "nama": "Cheras",
    "id": "CA16W",
    "negeri": "WP Kuala Lumpur",
    "jarak": 51,
-   "ipu": 108,
+   "ipu": 103,
    "kategori": "Tidak Sihat",
    "pencemar": "PM2.5",
-   "masa": "2026-10-24T20:00:00"
+   "masa": "2026-10-24T21:00:00"
   },
   {
    "nama": "Kuala Selangor",
    "id": "CA18B",
    "negeri": "Selangor",
    "jarak": 52,
-   "ipu": 66,
+   "ipu": 65,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-24T20:00:00"
+   "masa": "2026-10-24T21:00:00"
   }
  ]
 }
