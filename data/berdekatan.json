@@ -43,20 +43,20 @@
    "id": "CA16W",
    "negeri": "WP Kuala Lumpur",
    "jarak": 51,
-   "ipu": 47,
+   "ipu": 43,
    "kategori": "Baik",
    "pencemar": "PM2.5",
-   "masa": "2026-10-26T09:00:00"
+   "masa": "2026-10-26T10:00:00"
   },
   {
    "nama": "Kuala Selangor",
    "id": "CA18B",
    "negeri": "Selangor",
    "jarak": 52,
-   "ipu": 53,
+   "ipu": 54,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-26T09:00:00"
+   "masa": "2026-10-26T10:00:00"
   }
  ]
 }
