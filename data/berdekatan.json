@@ -5,7 +5,7 @@
  "julat": {
   "min": 28,
   "maks": 77,
-  "purata": 48
+  "purata": 47
  },
  "stesen": [
   {
@@ -43,10 +43,10 @@
    "id": "CA16W",
    "negeri": "WP Kuala Lumpur",
    "jarak": 51,
-   "ipu": 51,
-   "kategori": "Sederhana",
+   "ipu": 50,
+   "kategori": "Baik",
    "pencemar": "PM2.5",
-   "masa": "2026-10-26T17:00:00"
+   "masa": "2026-10-26T18:00:00"
   },
   {
    "nama": "Kuala Selangor",
