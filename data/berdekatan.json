@@ -1,10 +1,10 @@
 {
- "dikemaskini": "2026-10-28T20:00:00+08:00",
+ "dikemaskini": "2026-10-28T21:00:00+08:00",
  "sumber": "APIMS, Jabatan Alam Sekitar",
  "rujukan": "CA14A",
  "julat": {
-  "min": 30,
-  "maks": 85,
+  "min": 29,
+  "maks": 86,
   "purata": 52
  },
  "stesen": [
@@ -13,20 +13,20 @@
    "id": "CA14A",
    "negeri": "Perak",
    "jarak": 21,
-   "ipu": 30,
+   "ipu": 29,
    "kategori": "Baik",
    "pencemar": "PM2.5",
-   "masa": "2026-10-28T20:00:00"
+   "masa": "2026-10-28T21:00:00"
   },
   {
    "nama": "Batu Muda",
    "id": "CA15W",
    "negeri": "WP Kuala Lumpur",
    "jarak": 39,
-   "ipu": 85,
+   "ipu": 86,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-28T20:00:00"
+   "masa": "2026-10-28T21:00:00"
   },
   {
    "nama": "Petaling Jaya",
@@ -36,7 +36,7 @@
    "ipu": 53,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-28T20:00:00"
+   "masa": "2026-10-28T21:00:00"
   },
   {
    "nama": "Cheras",
@@ -46,17 +46,17 @@
    "ipu": 57,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-28T19:00:00"
+   "masa": "2026-10-28T21:00:00"
   },
   {
    "nama": "Kuala Selangor",
    "id": "CA18B",
    "negeri": "Selangor",
    "jarak": 52,
-   "ipu": 35,
+   "ipu": 36,
    "kategori": "Baik",
    "pencemar": "PM2.5",
-   "masa": "2026-10-28T20:00:00"
+   "masa": "2026-10-28T21:00:00"
   }
  ]
 }
