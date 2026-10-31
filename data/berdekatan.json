@@ -4,7 +4,7 @@
  "rujukan": "CA14A",
  "julat": {
   "min": 37,
-  "maks": 78,
+  "maks": 77,
   "purata": 60
  },
  "stesen": [
@@ -36,27 +36,27 @@
    "ipu": 60,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-31T15:00:00"
+   "masa": "2026-10-31T16:00:00"
   },
   {
    "nama": "Cheras",
    "id": "CA16W",
    "negeri": "WP Kuala Lumpur",
    "jarak": 51,
-   "ipu": 78,
+   "ipu": 77,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-31T15:00:00"
+   "masa": "2026-10-31T16:00:00"
   },
   {
    "nama": "Kuala Selangor",
    "id": "CA18B",
    "negeri": "Selangor",
    "jarak": 52,
-   "ipu": 54,
+   "ipu": 55,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-31T15:00:00"
+   "masa": "2026-10-31T16:00:00"
   }
  ]
 }
