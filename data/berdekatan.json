@@ -3,7 +3,7 @@
  "sumber": "APIMS, Jabatan Alam Sekitar",
  "rujukan": "CA14A",
  "julat": {
-  "min": 31,
+  "min": 32,
   "maks": 76,
   "purata": 59
  },
@@ -13,10 +13,10 @@
    "id": "CA14A",
    "negeri": "Perak",
    "jarak": 21,
-   "ipu": 31,
+   "ipu": 32,
    "kategori": "Baik",
    "pencemar": "PM2.5",
-   "masa": "2026-10-31T12:00:00"
+   "masa": "2026-10-31T13:00:00"
   },
   {
    "nama": "Batu Muda",
@@ -46,7 +46,7 @@
    "ipu": 74,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-10-31T12:00:00"
+   "masa": "2026-10-31T13:00:00"
   },
   {
    "nama": "Kuala Selangor",
