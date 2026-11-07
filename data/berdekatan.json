@@ -5,7 +5,7 @@
  "julat": {
   "min": 33,
   "maks": 65,
-  "purata": 50
+  "purata": 51
  },
  "stesen": [
   {
@@ -33,30 +33,30 @@
    "id": "CA19B",
    "negeri": "Selangor",
    "jarak": 48,
-   "ipu": 53,
+   "ipu": 52,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-11-07T18:00:00"
+   "masa": "2026-11-07T19:00:00"
   },
   {
    "nama": "Cheras",
    "id": "CA16W",
    "negeri": "WP Kuala Lumpur",
    "jarak": 51,
-   "ipu": 52,
+   "ipu": 53,
    "kategori": "Sederhana",
    "pencemar": "PM2.5",
-   "masa": "2026-11-07T18:00:00"
+   "masa": "2026-11-07T19:00:00"
   },
   {
    "nama": "Kuala Selangor",
    "id": "CA18B",
    "negeri": "Selangor",
    "jarak": 52,
-   "ipu": 48,
+   "ipu": 50,
    "kategori": "Baik",
    "pencemar": "PM2.5",
-   "masa": "2026-11-07T18:00:00"
+   "masa": "2026-11-07T19:00:00"
   }
  ]
 }
