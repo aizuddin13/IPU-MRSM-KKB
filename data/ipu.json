@@ -5,52 +5,10 @@
  "negeri": "Perak",
  "jarak_km": 21,
  "nota": "Tiada stesen APIMS di Kuala Kubu Bharu. Bacaan ini dari stesen rujukan terdekat.",
- "dikemaskini": "2026-11-08T17:00:00+08:00",
+ "dikemaskini": "2026-11-09T00:00:00+08:00",
  "sumber": "APIMS, Jabatan Alam Sekitar",
  "tetingkap_dicuba": [],
  "bacaan": [
-  {
-   "masa": "2026-11-01T18:00:00",
-   "ipu": 55,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-01T19:00:00",
-   "ipu": 55,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-01T20:00:00",
-   "ipu": 55,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-01T21:00:00",
-   "ipu": 55,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-01T22:00:00",
-   "ipu": 56,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-01T23:00:00",
-   "ipu": 56,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-02T00:00:00",
-   "ipu": 56,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
   {
    "masa": "2026-11-02T01:00:00",
    "ipu": 56,
@@ -1014,6 +972,48 @@
   {
    "masa": "2026-11-08T17:00:00",
    "ipu": 60,
+   "kategori": "Sederhana",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-08T18:00:00",
+   "ipu": 60,
+   "kategori": "Sederhana",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-08T19:00:00",
+   "ipu": 60,
+   "kategori": "Sederhana",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-08T20:00:00",
+   "ipu": 59,
+   "kategori": "Sederhana",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-08T21:00:00",
+   "ipu": 59,
+   "kategori": "Sederhana",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-08T22:00:00",
+   "ipu": 59,
+   "kategori": "Sederhana",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-08T23:00:00",
+   "ipu": 59,
+   "kategori": "Sederhana",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-09T00:00:00",
+   "ipu": 59,
    "kategori": "Sederhana",
    "pencemar": "PM2.5"
   }
