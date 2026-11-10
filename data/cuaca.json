@@ -1,6 +1,6 @@
 {
  "lokasi": "Kuala Kubu Bharu",
- "dikemaskini": "2026-11-10T10:16:38+08:00",
+ "dikemaskini": "2026-11-10T18:02:02+08:00",
  "sumber": "MET Malaysia melalui data.gov.my",
  "ramalan": [
   {
@@ -29,8 +29,8 @@
    "tarikh": "2026-11-12",
    "hari": "Khamis",
    "ringkasan": "Ribut petir",
-   "ringkasan_bila": "Sepanjang hari",
-   "pagi": "Hujan",
+   "ringkasan_bila": "Petang dan malam",
+   "pagi": "Tiada hujan",
    "petang": "Ribut petir",
    "malam": "Hujan",
    "suhu_min": 24,
