@@ -5,66 +5,12 @@
  "negeri": "Perak",
  "jarak_km": 21,
  "nota": "Tiada stesen APIMS di Kuala Kubu Bharu. Bacaan ini dari stesen rujukan terdekat.",
- "dikemaskini": "2026-11-12T11:00:00+08:00",
+ "dikemaskini": "2026-11-12T20:00:00+08:00",
  "sumber": "APIMS, Jabatan Alam Sekitar",
  "tetingkap_dicuba": [
   "2026-11-09T09:00:00"
  ],
  "bacaan": [
-  {
-   "masa": "2026-11-05T12:00:00",
-   "ipu": 50,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-05T13:00:00",
-   "ipu": 52,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-05T14:00:00",
-   "ipu": 52,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-05T15:00:00",
-   "ipu": 52,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-05T16:00:00",
-   "ipu": 52,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-05T17:00:00",
-   "ipu": 52,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-05T18:00:00",
-   "ipu": 52,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-05T19:00:00",
-   "ipu": 52,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-05T20:00:00",
-   "ipu": 52,
-   "kategori": "Sederhana",
-   "pencemar": "PM2.5"
-  },
   {
    "masa": "2026-11-05T21:00:00",
    "ipu": 51,
@@ -1018,6 +964,60 @@
    "ipu": 38,
    "kategori": "Baik",
    "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-12T12:00:00",
+   "ipu": 39,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-12T13:00:00",
+   "ipu": 39,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-12T14:00:00",
+   "ipu": 41,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-12T15:00:00",
+   "ipu": 42,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-12T16:00:00",
+   "ipu": 47,
+   "kategori": "Baik",
+   "pencemar": "O3"
+  },
+  {
+   "masa": "2026-11-12T17:00:00",
+   "ipu": 48,
+   "kategori": "Baik",
+   "pencemar": "O3"
+  },
+  {
+   "masa": "2026-11-12T18:00:00",
+   "ipu": 58,
+   "kategori": "Sederhana",
+   "pencemar": "O3"
+  },
+  {
+   "masa": "2026-11-12T19:00:00",
+   "ipu": 71,
+   "kategori": "Sederhana",
+   "pencemar": "O3"
+  },
+  {
+   "masa": "2026-11-12T20:00:00",
+   "ipu": 74,
+   "kategori": "Sederhana",
+   "pencemar": "O3"
   }
  ]
 }
