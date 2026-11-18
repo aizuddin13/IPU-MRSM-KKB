@@ -5,58 +5,10 @@
  "negeri": "Perak",
  "jarak_km": 21,
  "nota": "Tiada stesen APIMS di Kuala Kubu Bharu. Bacaan ini dari stesen rujukan terdekat.",
- "dikemaskini": "2026-11-18T22:00:00+08:00",
+ "dikemaskini": "2026-11-19T06:00:00+08:00",
  "sumber": "APIMS, Jabatan Alam Sekitar",
  "tetingkap_dicuba": [],
  "bacaan": [
-  {
-   "masa": "2026-11-11T23:00:00",
-   "ipu": 41,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-12T00:00:00",
-   "ipu": 40,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-12T01:00:00",
-   "ipu": 40,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-12T02:00:00",
-   "ipu": 40,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-12T03:00:00",
-   "ipu": 40,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-12T04:00:00",
-   "ipu": 40,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-12T05:00:00",
-   "ipu": 39,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-12T06:00:00",
-   "ipu": 39,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
   {
    "masa": "2026-11-12T07:00:00",
    "ipu": 39,
@@ -1014,6 +966,54 @@
   {
    "masa": "2026-11-18T22:00:00",
    "ipu": 28,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-18T23:00:00",
+   "ipu": 27,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-19T00:00:00",
+   "ipu": 28,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-19T01:00:00",
+   "ipu": 27,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-19T02:00:00",
+   "ipu": 26,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-19T03:00:00",
+   "ipu": 26,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-19T04:00:00",
+   "ipu": 25,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-19T05:00:00",
+   "ipu": 24,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-19T06:00:00",
+   "ipu": 25,
    "kategori": "Baik",
    "pencemar": "PM2.5"
   }
