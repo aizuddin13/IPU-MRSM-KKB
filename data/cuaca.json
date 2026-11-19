@@ -1,27 +1,16 @@
 {
  "lokasi": "Kuala Kubu Bharu",
- "dikemaskini": "2026-11-19T21:30:56+08:00",
+ "dikemaskini": "2026-11-20T06:17:49+08:00",
  "sumber": "MET Malaysia melalui data.gov.my",
  "ramalan": [
   {
-   "tarikh": "2026-11-19",
-   "hari": "Khamis",
+   "tarikh": "2026-11-20",
+   "hari": "Jumaat",
    "ringkasan": "Ribut petir",
    "ringkasan_bila": "Petang dan malam",
    "pagi": "Tiada hujan",
    "petang": "Ribut petir",
    "malam": "Hujan",
-   "suhu_min": 24,
-   "suhu_maks": 32
-  },
-  {
-   "tarikh": "2026-11-20",
-   "hari": "Jumaat",
-   "ringkasan": "Ribut petir",
-   "ringkasan_bila": "Pagi dan petang",
-   "pagi": "Hujan",
-   "petang": "Ribut petir",
-   "malam": "Tiada hujan",
    "suhu_min": 24,
    "suhu_maks": 32
   },
@@ -40,10 +29,10 @@
    "tarikh": "2026-11-22",
    "hari": "Ahad",
    "ringkasan": "Ribut petir",
-   "ringkasan_bila": "Petang dan malam",
+   "ringkasan_bila": "Petang",
    "pagi": "Tiada hujan",
    "petang": "Ribut petir",
-   "malam": "Hujan",
+   "malam": "Tiada hujan",
    "suhu_min": 24,
    "suhu_maks": 32
   },
@@ -72,6 +61,17 @@
   {
    "tarikh": "2026-11-25",
    "hari": "Rabu",
+   "ringkasan": "Ribut petir",
+   "ringkasan_bila": "Petang dan malam",
+   "pagi": "Tiada hujan",
+   "petang": "Ribut petir",
+   "malam": "Hujan",
+   "suhu_min": 24,
+   "suhu_maks": 32
+  },
+  {
+   "tarikh": "2026-11-26",
+   "hari": "Khamis",
    "ringkasan": "Ribut petir",
    "ringkasan_bila": "Petang dan malam",
    "pagi": "Tiada hujan",
