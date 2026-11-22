@@ -5,40 +5,10 @@
  "negeri": "Perak",
  "jarak_km": 21,
  "nota": "Tiada stesen APIMS di Kuala Kubu Bharu. Bacaan ini dari stesen rujukan terdekat.",
- "dikemaskini": "2026-11-22T03:00:00+08:00",
+ "dikemaskini": "2026-11-22T08:00:00+08:00",
  "sumber": "APIMS, Jabatan Alam Sekitar",
  "tetingkap_dicuba": [],
  "bacaan": [
-  {
-   "masa": "2026-11-15T04:00:00",
-   "ipu": 44,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-15T05:00:00",
-   "ipu": 44,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-15T06:00:00",
-   "ipu": 44,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-15T07:00:00",
-   "ipu": 45,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-15T08:00:00",
-   "ipu": 44,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
   {
    "masa": "2026-11-15T09:00:00",
    "ipu": 44,
@@ -1013,6 +983,36 @@
   },
   {
    "masa": "2026-11-22T03:00:00",
+   "ipu": 37,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-22T04:00:00",
+   "ipu": 37,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-22T05:00:00",
+   "ipu": 37,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-22T06:00:00",
+   "ipu": 36,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-22T07:00:00",
+   "ipu": 37,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-22T08:00:00",
    "ipu": 37,
    "kategori": "Baik",
    "pencemar": "PM2.5"
