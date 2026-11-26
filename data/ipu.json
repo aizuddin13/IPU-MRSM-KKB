@@ -5,70 +5,10 @@
  "negeri": "Perak",
  "jarak_km": 21,
  "nota": "Tiada stesen APIMS di Kuala Kubu Bharu. Bacaan ini dari stesen rujukan terdekat.",
- "dikemaskini": "2026-11-26T09:00:00+08:00",
+ "dikemaskini": "2026-11-26T19:00:00+08:00",
  "sumber": "APIMS, Jabatan Alam Sekitar",
  "tetingkap_dicuba": [],
  "bacaan": [
-  {
-   "masa": "2026-11-19T10:00:00",
-   "ipu": 28,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-19T11:00:00",
-   "ipu": 27,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-19T12:00:00",
-   "ipu": 28,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-19T13:00:00",
-   "ipu": 28,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-19T14:00:00",
-   "ipu": 28,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-19T15:00:00",
-   "ipu": 29,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-19T16:00:00",
-   "ipu": 28,
-   "kategori": "Baik",
-   "pencemar": "PM2.5"
-  },
-  {
-   "masa": "2026-11-19T17:00:00",
-   "ipu": 29,
-   "kategori": "Baik",
-   "pencemar": "2 pencemar atau lebih"
-  },
-  {
-   "masa": "2026-11-19T18:00:00",
-   "ipu": 32,
-   "kategori": "Baik",
-   "pencemar": "O3"
-  },
-  {
-   "masa": "2026-11-19T19:00:00",
-   "ipu": 34,
-   "kategori": "Baik",
-   "pencemar": "O3"
-  },
   {
    "masa": "2026-11-19T20:00:00",
    "ipu": 33,
@@ -1013,6 +953,66 @@
   },
   {
    "masa": "2026-11-26T09:00:00",
+   "ipu": 33,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-26T10:00:00",
+   "ipu": 34,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-26T11:00:00",
+   "ipu": 34,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-26T12:00:00",
+   "ipu": 36,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-26T13:00:00",
+   "ipu": 35,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-26T14:00:00",
+   "ipu": 36,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-26T15:00:00",
+   "ipu": 36,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-26T16:00:00",
+   "ipu": 35,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-26T17:00:00",
+   "ipu": 35,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-26T18:00:00",
+   "ipu": 34,
+   "kategori": "Baik",
+   "pencemar": "PM2.5"
+  },
+  {
+   "masa": "2026-11-26T19:00:00",
    "ipu": 33,
    "kategori": "Baik",
    "pencemar": "PM2.5"
